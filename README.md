@@ -1,5 +1,8 @@
 # reitit-ring-defaults
 
+[![cljdoc](https://cljdoc.org/badge/com.fbeyer/reitit-ring-defaults)][cljdoc]
+[![Clojars](https://img.shields.io/clojars/v/com.fbeyer/reitit-ring-defaults.svg)][clojars]
+
 Lifts [ring-defaults] middleware into data-driven middleware, providing
 sensible defaults per route.
 
@@ -109,6 +112,8 @@ suitable for non-trivial production deployments, you will want to do that anyway
 Copyright 2022 Ferdinand Beyer.  
 Distributed under the [MIT License](LICENSE).
 
+[cljdoc]: https://cljdoc.org/jump/release/com.fbeyer/reitit-ring-defaults
+[clojars]: https://clojars.org/com.fbeyer/reitit-ring-defaults
 [reitit]: https://github.com/metosin/reitit
 [ring-defaults]: https://github.com/ring-clojure/ring-defaults
 [reitit-session-issue]: https://github.com/metosin/reitit/issues/205

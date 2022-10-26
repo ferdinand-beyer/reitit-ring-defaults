@@ -55,7 +55,7 @@ provided by ring-defaults, such as `api-defaults`:
     (ring/router
       ["/api"
        {:middleware [ring-defaults-middleware]
-        :defaults   apu-defaults}
+        :defaults   api-defaults}
        ["/ping" handler]
        ["/pong" handler]]
       routes)))

@@ -54,8 +54,8 @@ provided by ring-defaults, such as `api-defaults`:
   (ring/ring-handler
     (ring/router
       ["/api"
-       {:middleware [ring-defaults-middleware]
-        :defaults   apu-defaults}
+       {:middleware ring-defaults-middleware
+        :defaults   api-defaults}
        ["/ping" handler]
        ["/pong" handler]]
       routes)))
@@ -97,7 +97,7 @@ suitable for non-trivial production deployments, you will want to do that anyway
   (ring/ring-handler
     (ring/router
       ["/api"
-       {:middleware [ring-defaults-middleware]
+       {:middleware ring-defaults-middleware
         :defaults   (-> site-defaults
                         (assoc-in [:session :store] session-store))}
        ["/ping" handler]

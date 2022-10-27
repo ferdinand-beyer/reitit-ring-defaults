@@ -73,11 +73,36 @@ impact.
 
 ## Extended defaults
 
-Reitit provides excellent support for content negotiation and coercion.
+Reitit provides excellent support for [content negotiation][reitit-format]
+and [coercion][reitit-coercion],
+as well as [exception handling][reitit-exception].
 
-Since it is very common to use these, and opting out has no runtime penalty,
-there is a `defaults-middleware` that includes additional Reitit middleware
-as a sensible default.
+Since it is very common to use these, there is a `defaults-middleware`
+that includes additional Reitit middleware as a sensible default.
+
+```clojure
+(require '[muuntaja.core :as muuntaja]
+         '[reitit.coercion.malli]
+         '[reitit.ring.middleware.defaults :refer [defaults-middleware]])
+
+(def app
+  (ring/ring-handler
+    (ring/router
+      ["/api"
+       {:middleware defaults-middleware
+        :defaults   (-> api-defaults
+                        ;; Enable exception middleware.  You can also add custom
+                        ;; handlers in the [:exception handlers] key and they
+                        ;; will be passed to create-exception-middleware.
+                        (assoc :exception true))
+        ;; Muuntaja instance for content negotiation
+        :muuntaja muuntaja/instance
+        ;; Request and response coercion -- using Malli in this case.
+        :coercion reitit.coercion.malli/coercion}
+       ["/ping" handler]
+       ["/pong" handler]]
+      routes)))
+```
 
 ## Warning on Session Middleware
 
@@ -116,4 +141,7 @@ Distributed under the [MIT License](LICENSE).
 [clojars]: https://clojars.org/com.fbeyer/reitit-ring-defaults
 [reitit]: https://github.com/metosin/reitit
 [ring-defaults]: https://github.com/ring-clojure/ring-defaults
+[reitit-coercion]: https://cljdoc.org/d/metosin/reitit/CURRENT/doc/ring/pluggable-coercion
+[reitit-exception]: https://cljdoc.org/d/metosin/reitit/CURRENT/doc/ring/exception-handling-with-ring
+[reitit-format]: https://cljdoc.org/d/metosin/reitit/CURRENT/doc/ring/content-negotiation
 [reitit-session-issue]: https://github.com/metosin/reitit/issues/205

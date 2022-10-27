@@ -13,17 +13,20 @@ of "standard" middleware.  For many common tasks such as session management,
 additional middleware is required.
 
 Many people use `wrap-defaults` from [ring-defaults] as a sensible default
-chain.  However, some middleware included in `site-defaults` will conflict with
-an idiomatic Reitit setup:
+chain.  However, some middleware included in `site-defaults` will duplicate
+or conflict with an idiomatic Reitit setup:
 
 - Static resources with `create-resource-handler` and `create-file-handler`
-- Parameter and multi-part handling
+  will have no effect when ring-defaults installs a `wrap-resource`
+  and `wrap-file` middleware
+- Duplicate parameter and multi-part handling
 
-The result is a sub-optimal performance and developer's confusion when requests
+The result is sub-optimal performance and developer's confusion when requests
 are not handled as expected.
 
 Furthermore, it is not obvious at which place in Reitit's configuration
-`wrap-defaults` should go.
+`wrap-defaults` should go: on the `ring-handler`, in global router data,
+per route?
 
 ## Installation
 

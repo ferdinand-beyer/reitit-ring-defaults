@@ -2,7 +2,8 @@
   (:refer-clojure :exclude [compile])
   (:require [reitit.ring.coercion :as coercion]
             [reitit.ring.middleware.exception :as exception]
-            [reitit.ring.middleware.multipart :as multipart]
+            [reitit.ring.middleware.defaults.multipart
+             :refer [multipart-params-middleware multipart-coercion-middleware]]
             [reitit.ring.middleware.muuntaja :as format]
             [reitit.ring.middleware.parameters :as parameters]
             [ring.middleware.absolute-redirects :refer [wrap-absolute-redirects]]
@@ -94,14 +95,6 @@
               (when (get-in data [:defaults :params :urlencoded])
                 parameters/parameters-middleware))})
 
-(def multipart-middleware
-  {:name ::multipart
-   :compile (fn [data _]
-              (when-let [opts (get-in data [:defaults :params :multipart])]
-                (if (true? opts)
-                  multipart/multipart-middleware
-                  (multipart/create-multipart-middleware opts))))})
-
 (def nested-params-middleware
   {:name ::nested-params
    :compile (compile wrap-nested-params #(get-in % [:params :nested] false))})
@@ -157,7 +150,7 @@
    cookies-middleware
 
    params-middleware
-   multipart-middleware
+   multipart-params-middleware
    nested-params-middleware
    keyword-params-middleware
 
@@ -181,4 +174,6 @@
 
    coercion/coerce-exceptions-middleware
    coercion/coerce-request-middleware
-   coercion/coerce-response-middleware))
+   coercion/coerce-response-middleware
+
+   multipart-coercion-middleware))

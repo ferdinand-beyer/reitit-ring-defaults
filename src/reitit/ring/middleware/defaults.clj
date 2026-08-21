@@ -123,6 +123,12 @@
                   (exception/create-exception-middleware handlers)
                   exception/exception-middleware)))})
 
+(def coerce-exceptions-middleware
+  {:name ::coerce-exceptions
+   :compile (fn [data route-opts]
+              (when-not (get-in data [:defaults :exception])
+                ((:compile coercion/coerce-exceptions-middleware) data route-opts)))})
+
 (def ring-defaults-middleware
   "Applies the same middleware as `ring.middleware.defaults/wrap-defaults`,
    but as Reitit data-driven middleware with per-route compilation.
@@ -168,7 +174,7 @@
    format/format-negotiate-middleware
    format/format-response-middleware
 
-   coercion/coerce-exceptions-middleware
+   coerce-exceptions-middleware
    exception-middleware
 
    format/format-request-middleware

@@ -168,11 +168,11 @@
    format/format-negotiate-middleware
    format/format-response-middleware
 
+   coercion/coerce-exceptions-middleware
    exception-middleware
 
    format/format-request-middleware
 
-   coercion/coerce-exceptions-middleware
    coercion/coerce-request-middleware
    coercion/coerce-response-middleware
 

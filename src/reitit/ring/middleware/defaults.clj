@@ -174,6 +174,8 @@
    format/format-negotiate-middleware
    format/format-response-middleware
 
+   ;; The order is important: `coerce-exceptions-middleware` must stay outside
+   ;; `exception-middleware`, which usually answers coercion errors too.
    coerce-exceptions-middleware
    exception-middleware
 
